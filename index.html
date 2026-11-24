@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b0c">
+  <meta name="description" content="NEON RUSH — suivi sportif personnel">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+  <title>NEON RUSH</title>
+</head>
+<body>
+  <header class="topbar">
+    <div><div class="eyebrow">TRAIN SMART • RECOVER WELL</div><h1>NEON <span>RUSH</span></h1></div>
+    <div class="today" id="today"></div>
+  </header>
+
+  <main>
+    <section class="screen active" id="dashboard">
+      <div class="hero panel">
+        <div class="eyebrow">TON ESPACE SPORTIF</div>
+        <h2>Chaque séance<br><span>compte.</span></h2>
+        <p>Progresse à ton rythme, avec une technique maîtrisée et une récupération suffisante.</p>
+        <button class="primary" data-go="training">Voir mes séances <b>↗</b></button>
+      </div>
+      <div class="grid2">
+        <div class="stat panel"><small>SÉANCES CETTE SEMAINE</small><strong id="weekCount">0/5</strong><span>Régularité avant tout</span></div>
+        <div class="stat panel"><small>SÉRIES ENREGISTRÉES</small><strong id="setCount">0</strong><span>Toutes séances confondues</span></div>
+      </div>
+      <div class="sectionhead"><h3>Programme de la semaine</h3><span class="muted">5 séances</span></div>
+      <div id="weekPreview" class="stack"></div>
+      <div class="panel note"><b>Rappel du coach</b><p>Arrête une série si tu ressens une douleur inhabituelle. La qualité du mouvement et la récupération passent avant la charge.</p></div>
+    </section>
+
+    <section class="screen" id="training">
+      <div class="sectionhead"><div><div class="eyebrow">TON PROGRAMME</div><h2>Entraînements</h2></div></div>
+      <div id="workoutList" class="stack"></div>
+    </section>
+
+    <section class="screen" id="session">
+      <button class="back" data-go="training">← Toutes les séances</button>
+      <div class="eyebrow" id="sessionDay"></div>
+      <h2 id="sessionTitle">Séance</h2>
+      <p class="muted" id="sessionDescription"></p>
+      <div id="exerciseList" class="stack"></div>
+    </section>
+
+    <section class="screen" id="logger">
+      <button class="back" id="backExercise">← Retour à la séance</button>
+      <div class="eyebrow">ENREGISTREUR DE PERFORMANCE</div>
+      <h2 id="loggerTitle">Exercice</h2>
+      <div class="panel">
+        <div class="grid2">
+          <label>Charge (kg)<input id="loadInput" type="number" min="0" step="0.5" inputmode="decimal" placeholder="Ex. 20"></label>
+          <label>Répétitions<input id="repInput" type="number" min="0" step="1" inputmode="numeric" placeholder="Ex. 10"></label>
+        </div>
+        <label>Difficulté ressentie
+          <select id="effortInput"><option value="facile">Facile</option><option value="modere" selected>Modérée</option><option value="difficile">Difficile</option><option value="trop_difficile">Trop difficile</option></select>
+        </label>
+        <label>Note facultative<textarea id="noteInput" rows="2" placeholder="Technique, énergie, sensations…"></textarea></label>
+        <button class="primary full" id="saveSet">Enregistrer cette série</button>
+      </div>
+      <div id="coachAdvice" class="panel advice hidden" aria-live="polite"></div>
+      <div class="sectionhead"><h3>Séries de cet exercice</h3><span class="muted" id="setCounter">0 enregistrée</span></div>
+      <div id="setHistory" class="stack"></div>
+    </section>
+
+    <section class="screen" id="history">
+      <div class="eyebrow">TES DONNÉES</div><h2>Historique</h2>
+      <div class="grid2">
+        <div class="stat panel"><small>TOTAL DES SÉRIES</small><strong id="historySets">0</strong></div>
+        <div class="stat panel"><small>EXERCICES SUIVIS</small><strong id="historyExercises">0</strong></div>
+      </div>
+      <div id="historyList" class="stack"></div>
+      <button class="secondary full" id="exportCsv">Exporter mes données (CSV)</button>
+    </section>
+
+    <section class="screen" id="journal">
+      <div class="eyebrow">NOTES PERSONNELLES</div><h2>Journal</h2>
+      <div class="panel">
+        <label>Comment s'est passée ta journée ?<textarea id="journalText" rows="4" placeholder="Énergie, sommeil, motivation, récupération…"></textarea></label>
+        <button class="primary full" id="saveJournal">Enregistrer ma note</button>
+      </div>
+      <div class="panel">
+        <h3>Journal photo daté</h3>
+        <p class="muted small">Tu peux conserver des photos personnelles pour ton journal. Elles restent dans le stockage local de ce navigateur, qui n'est pas un coffre-fort privé. Évite les photos sensibles.</p>
+        <label>Ajouter une photo<input id="photoInput" type="file" accept="image/*"></label>
+        <label>Petite légende<input id="photoCaption" type="text" placeholder="Ex. séance du samedi"></label>
+        <button class="secondary full" id="savePhoto">Ajouter au journal</button>
+      </div>
+      <div id="journalList" class="stack"></div>
+    </section>
+
+    <section class="screen" id="food">
+      <div class="eyebrow">ÉQUILIBRE AU QUOTIDIEN</div><h2>Nutrition</h2>
+      <div class="panel">
+        <h3>Construire un repas varié</h3>
+        <ul class="tips">
+          <li>Associe une source de protéines, des féculents et des légumes ou fruits.</li>
+          <li>Varie les aliments au fil de la semaine.</li>
+          <li>Bois régulièrement, notamment autour de l'entraînement.</li>
+          <li>Adapte les quantités à ta faim, ton activité et tes besoins de croissance.</li>
+          <li>Les repas et collations contribuent aussi à la récupération.</li>
+        </ul>
+      </div>
+      <div class="grid2">
+        <div class="panel mini"><b>Avant l'entraînement</b><p>Un repas ou une collation habituelle qui te donne de l'énergie.</p></div>
+        <div class="panel mini"><b>Après l'entraînement</b><p>Un repas complet et de l'eau pour favoriser la récupération.</p></div>
+      </div>
+      <p class="muted small">Cette application ne calcule pas de déficit calorique et ne fixe pas d'objectif de perte de poids. Pour des besoins nutritionnels particuliers, demande conseil à un professionnel de santé.</p>
+    </section>
+  </main>
+
+  <nav class="bottomnav">
+    <button class="navitem active" data-go="dashboard"><span>⌂</span>Accueil</button>
+    <button class="navitem" data-go="training"><span>▤</span>Séances</button>
+    <button class="navitem" data-go="history"><span>↗</span>Suivi</button>
+    <button class="navitem" data-go="journal"><span>▧</span>Journal</button>
+    <button class="navitem" data-go="food"><span>✳</span>Nutrition</button>
+  </nav>
+  <div id="toast" role="status" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
